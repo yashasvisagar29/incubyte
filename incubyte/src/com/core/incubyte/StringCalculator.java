@@ -7,13 +7,17 @@ public class StringCalculator {
 	public int add(String numbers) {
 
 		int result = 0;
-		String delimiter = ",";
+		Character delimiter = ',';
 
 		if (numbers.isEmpty()) {
 			return result;
 		} else {
 			try {
-				String[] nums = numbers.split(delimiter);
+				if (numbers.contains("//")) {
+					delimiter = numbers.charAt(2);
+					numbers = numbers.substring(3, numbers.length());
+				}
+				String[] nums = numbers.split(delimiter.toString());
 
 				for (String num : nums) {
 
@@ -21,7 +25,9 @@ public class StringCalculator {
 						String[] newLineNums = num.split("\n");
 						if (newLineNums.length > 0) {
 							for (String newLineNum : newLineNums) {
-								result += Integer.parseInt(newLineNum);
+								if (!newLineNum.isEmpty()) {
+									result += Integer.parseInt(newLineNum);
+								}
 							}
 						} else {
 							throw new NumberFormatException(NUMBER_FORMAT_EXCEPTION_MSG);
