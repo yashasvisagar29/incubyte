@@ -17,9 +17,14 @@ public class StringCalculator {
 
 				for (String num : nums) {
 
-					
-					result += Integer.parseInt(num);
-
+					if (num.contains("\n")) {
+						String[] newLineNums = num.split("\n");
+						for (String newLineNum : newLineNums) {
+							result += Integer.parseInt(newLineNum);
+						}
+					} else {
+						result += Integer.parseInt(num);
+					}
 				}
 
 			} catch (NumberFormatException e) {
