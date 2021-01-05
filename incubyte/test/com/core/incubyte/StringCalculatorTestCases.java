@@ -14,33 +14,43 @@ public class StringCalculatorTestCases {
 	}
 
 	@Test
-	public void testEmptyString() {
+	public void testEmptyString() throws NegationNumberCustomException {
 		Assert.assertEquals(0, sc.add(""));
 	}
 
 	@Test
-	public void test1() {
+	public void test1() throws NegationNumberCustomException {
 		Assert.assertEquals(1, sc.add("1"));
 	}
 
 	@Test
-	public void test1Plus2() {
+	public void test1Plus2() throws NegationNumberCustomException {
 		Assert.assertEquals(3, sc.add("1,2"));
 	}
 
 	@Test
-	public void testUnknownAmountOfNumbers() {
+	public void testUnknownAmountOfNumbers() throws NegationNumberCustomException {
 		Assert.assertEquals(74, sc.add("1,1,1,1,1,1,11,1,1,1,1,1,1,1,1,1,11,1,1,1,1,1,1,1,11,11,1,1,1,2,3"));
 	}
 
 	@Test
-	public void testNewLineAdditionOfNumbers() {
+	public void testNewLineAdditionOfNumbers() throws NegationNumberCustomException {
 		Assert.assertEquals(6, sc.add("1\n2,3"));
 	}
 
 	@Test
-	public void testNewDelimiterAdditionOfNumbers() {
+	public void testNewDelimiterAdditionOfNumbers() throws NegationNumberCustomException {
 		Assert.assertEquals(3, sc.add("//;\n1;2"));
+	}
+
+	@Test
+	public void testNegativeAdditionOfNumbers() throws NegationNumberCustomException {
+		Assert.assertEquals("Exception Occur", sc.add("1,-3"));
+	}
+	
+	@Test
+	public void testMultipleNegativeAdditionOfNumbers() throws NegationNumberCustomException {
+		Assert.assertEquals("Exception Occur", sc.add("-1,-3"));
 	}
 
 }
