@@ -38,4 +38,6 @@ public class StringCalculatorTestCases {
 		Assert.assertEquals(6, sc.add("1\n2,3"));
 	}
 
+
+	
 }

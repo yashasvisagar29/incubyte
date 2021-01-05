@@ -19,8 +19,12 @@ public class StringCalculator {
 
 					if (num.contains("\n")) {
 						String[] newLineNums = num.split("\n");
-						for (String newLineNum : newLineNums) {
-							result += Integer.parseInt(newLineNum);
+						if (newLineNums.length > 0) {
+							for (String newLineNum : newLineNums) {
+								result += Integer.parseInt(newLineNum);
+							}
+						} else {
+							throw new NumberFormatException(NUMBER_FORMAT_EXCEPTION_MSG);
 						}
 					} else {
 						result += Integer.parseInt(num);
