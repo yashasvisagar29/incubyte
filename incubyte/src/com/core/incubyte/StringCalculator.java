@@ -17,6 +17,7 @@ public class StringCalculator {
 
 				for (String num : nums) {
 
+					
 					result += Integer.parseInt(num);
 
 				}
