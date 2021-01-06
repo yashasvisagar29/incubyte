@@ -62,6 +62,16 @@ public class StringCalculatorTestCases {
 	public void testDelimiterOfAnyLength() throws NegationNumberCustomException {
 		Assert.assertEquals(6, sc.add("//[***]\n1***2***3"));
 	}
+	
+	@Test
+	public void testMultipleDelimiters() throws NegationNumberCustomException {
+		Assert.assertEquals(6, sc.add("//[*][%]\n1*2%3"));
+	}
+	
+	@Test
+	public void testMultipleDelimitersOfAnyLength() throws NegationNumberCustomException {
+		Assert.assertEquals(6, sc.add("//[**][%%]\n1**2%%3"));
+	}
 
 
 	

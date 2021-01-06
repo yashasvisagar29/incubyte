@@ -20,22 +20,37 @@ public class StringCalculator {
 	public int add(String numbers) throws NegationNumberCustomException {
 		count++;
 		int result = 0;
-		String delimiter = ",";
-
+		StringBuilder delimiter = new StringBuilder();
 		if (numbers.isEmpty()) {
 			return result;
 		} else {
 			if (numbers.contains("//")) {
 				if (numbers.contains("[") && numbers.contains("]")) {
-					delimiter = numbers.substring(numbers.indexOf('[') + 1, numbers.indexOf(']'));
-					numbers = numbers.substring(numbers.indexOf(']') + 2);
+					boolean delimiterFlag = false;
+					int countOfDelimiter = 0;
+					for (int i = 0; i < numbers.indexOf('\n'); i++) {
+						if (numbers.charAt(i) == ']') {
+							delimiterFlag = false;
+						}
+						if (delimiterFlag) {
+							delimiter.append(numbers.charAt(i));
+						}
+						if (numbers.charAt(i) == '[') {
+							delimiterFlag = true;
+							countOfDelimiter++;
+							if (countOfDelimiter > 1) {
+								delimiter.append("|");
+							}
+						}
+					}
+					numbers = numbers.substring(numbers.indexOf('\n'));
 				} else {
-					delimiter = numbers.substring(2, 3);
-					numbers = numbers.substring(numbers.indexOf('\n') + 1);
+					delimiter.append(numbers.substring(2, 3));
+					numbers = numbers.substring(numbers.indexOf('\n'));
 				}
+			} else {
+				delimiter.append(",");
 			}
-			System.out.println(delimiter);
-			System.out.println(numbers);
 
 			List<Character> specialCharacters = new ArrayList<>();
 
