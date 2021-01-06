@@ -1,6 +1,8 @@
 package com.core.incubyte;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class StringCalculator {
@@ -9,19 +11,48 @@ public class StringCalculator {
 
 	private static final String NEGATIVE_NUMBER_EXCEPTION_MSG = "Negatives not allowed ";
 
-	public int add(String numbers) throws NegationNumberCustomException {
+	private static int count = 0;
 
+	public int getCalledCount() {
+		return count;
+	}
+
+	public int add(String numbers) throws NegationNumberCustomException {
+		count++;
 		int result = 0;
-		Character delimiter = ',';
+		String delimiter = ",";
 
 		if (numbers.isEmpty()) {
 			return result;
 		} else {
 			if (numbers.contains("//")) {
-				delimiter = numbers.charAt(2);
-				numbers = numbers.substring(3, numbers.length());
+				if (numbers.contains("[") && numbers.contains("]")) {
+					delimiter = numbers.substring(numbers.indexOf('[') + 1, numbers.indexOf(']'));
+					numbers = numbers.substring(numbers.indexOf(']') + 2);
+				} else {
+					delimiter = numbers.substring(2, 3);
+					numbers = numbers.substring(numbers.indexOf('\n') + 1);
+				}
 			}
-			String[] nums = numbers.split(delimiter.toString());
+			System.out.println(delimiter);
+			System.out.println(numbers);
+
+			List<Character> specialCharacters = new ArrayList<>();
+
+			populateSpecialCharacterListForDelimiter(specialCharacters);
+
+			StringBuilder delimiterSb = new StringBuilder();
+			for (int i = 0; i < delimiter.length(); i++) {
+				Character delimiterCh = delimiter.charAt(i);
+				if (specialCharacters.contains(delimiterCh)) {
+					delimiterSb.append("\\" + delimiterCh);
+				} else {
+					delimiterSb.append(delimiterCh);
+				}
+
+			}
+
+			String[] nums = numbers.split(delimiterSb.toString());
 
 			for (String num : nums) {
 
@@ -31,14 +62,20 @@ public class StringCalculator {
 						if (newLineNums.length > 0) {
 							for (String newLineNum : newLineNums) {
 								if (!newLineNum.isEmpty()) {
-									result += Integer.parseInt(newLineNum.trim());
+									int numI = Integer.parseInt(newLineNum.trim());
+									if (numI < 1001) {
+										result += numI;
+									}
 								}
 							}
 						} else {
 							throw new NumberFormatException(NUMBER_FORMAT_EXCEPTION_MSG);
 						}
 					} else {
-						result += Integer.parseInt(num.trim());
+						int numI = Integer.parseInt(num.trim());
+						if (numI < 1001) {
+							result += numI;
+						}
 					}
 				} else {
 					throw new NegationNumberCustomException(NEGATIVE_NUMBER_EXCEPTION_MSG
@@ -49,6 +86,12 @@ public class StringCalculator {
 			return result;
 		}
 
+	}
+
+	private void populateSpecialCharacterListForDelimiter(List<Character> specialCharacters) {
+		specialCharacters.add('*');
+		specialCharacters.add('+');
+		specialCharacters.add('^');
 	}
 
 }

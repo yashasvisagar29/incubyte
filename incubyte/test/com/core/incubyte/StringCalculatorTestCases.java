@@ -47,10 +47,23 @@ public class StringCalculatorTestCases {
 	public void testNegativeAdditionOfNumbers() throws NegationNumberCustomException {
 		Assert.assertEquals("Exception Occur", sc.add("1,-3"));
 	}
-	
+
 	@Test
 	public void testMultipleNegativeAdditionOfNumbers() throws NegationNumberCustomException {
 		Assert.assertEquals("Exception Occur", sc.add("-1,-3"));
 	}
 
+	@Test
+	public void testNumberGreaterThan1000() throws NegationNumberCustomException {
+		Assert.assertEquals(2, sc.add("2,1001"));
+	}
+
+	@Test
+	public void testDelimiterOfAnyLength() throws NegationNumberCustomException {
+		Assert.assertEquals(6, sc.add("//[***]\n1***2***3"));
+	}
+
+
+	
 }
+
